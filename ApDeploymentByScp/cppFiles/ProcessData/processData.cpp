@@ -396,11 +396,11 @@ vector<Point> createPoints(int minX, int minY, int maxX, int maxY, int dist, vec
 	Point p2(minX,minY);
 	Point p3(minX,maxY);
 	Point p4(maxX,minY);
-	//int cnt = 0;
-	//ofstream location_out("../data/nodescheck"); //for check
+
 	for(int i = minX + 1000; i < maxX; i += dist){
 		for(int j = minY + 1000; j < maxY; j += dist){
 			//测试区域处理
+			/* 
 			if(i >= 195444 && j >= 15816 && j <= 24951){
 				//cout<<"pass"<<endl;
 				continue;
@@ -413,26 +413,10 @@ vector<Point> createPoints(int minX, int minY, int maxX, int maxY, int dist, vec
 			
 			if(type == 1 && i >= 194724 && j >= 40746){
 				continue;
-			}
+			}*/ 
 			
 			
 			Point pos(i,j);
-			/*
-			//check
-			bool check1 = (!hasBarrier(pos,p1,lines)) || (!hasBarrier(pos,p2,lines)) || (!hasBarrier(pos,p3,lines)) || (!hasBarrier(pos,p4,lines));
-			bool check2 = (!hasBarrier(pos,p1,ori_lines)) || (!hasBarrier(pos,p2,ori_lines)) || (!hasBarrier(pos,p3,ori_lines)) || (!hasBarrier(pos,p4,ori_lines));
-			if(check1 == 1 && check2 == 0){
-				location_out<<i<<" "<<j<<endl;
-				if(i < 190000 && j > 10000){
-					cnt++;
-					if(!hasBarrier(pos,p1,lines)) location_out<<1<<endl;
-					else if(!hasBarrier(pos,p2,lines)) location_out<<2<<endl;
-					else if(!hasBarrier(pos,p3,lines)) location_out<<3<<endl;
-					else if(!hasBarrier(pos,p4,lines)) location_out<<4<<endl;
-					if(cnt == 2) return points;
-				}
-			}
-			*/
 			
 			if(!hasBarrier(pos,p1,lines) || !hasBarrier(pos,p2,lines) || !hasBarrier(pos,p3,lines) || !hasBarrier(pos,p4,lines)){
 				continue;
@@ -442,14 +426,6 @@ vector<Point> createPoints(int minX, int minY, int maxX, int maxY, int dist, vec
 			points.push_back(pos);
 		}
 	}
-	/*
-	//for check
-	location_out<<p1.x<<" "<<p1.y<<endl;
-	location_out<<p2.x<<" "<<p2.y<<endl;
-	location_out<<p3.x<<" "<<p3.y<<endl;
-	location_out<<p4.x<<" "<<p4.y<<endl;
-	cout<<"cnt:"<<cnt<<endl;
-	*/
 	return points;
 }
 
@@ -507,11 +483,9 @@ vector<pair<int,int>> getConflictCand(vector<Point>& cands, double thre){
 	for(int i = 0;i < cands.size();++i){
 		for(int j = i+1;j < cands.size();++j){
 			double dist = sqrt(pow((cands[i].x - cands[j].x),2) + pow((cands[i].y - cands[j].y), 2));
-			//if(i == 480 && j == 481) cout<<"test:"<<dist<<endl;
 			if(dist <= thre){
 				pair<int,int> p(i,j);
 				ans.push_back(p);
-				//if(i == 480 && j == 481) cout<<"push success"<<endl;
 			}
 		}
 	}
@@ -526,7 +500,7 @@ void writeFile(vector<vector<int>>& cover_sets, int m, int n){
 	if(!location_out.is_open())
 		return;
 	*/
-	ofstream location_out("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/testfile");
+	ofstream location_out("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/testfile");
 	location_out << m << ' ' << n << endl;
 	for(int i = 0;i < cover_sets.size(); ++i){
 		vector<int> pos = cover_sets[i];
@@ -542,7 +516,7 @@ void writeFile(vector<vector<int>>& cover_sets, int m, int n){
 void writeFile1(vector<vector<int>>& cover_sets, int m, int n, vector<Point>& cands,int cover_times, int thre){
 	//ofstream location_out("../data/newtestfile");
 	//ofstream location_out("./testfile"); //!
-	ofstream location_out("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/newtestfile");
+	ofstream location_out("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/newtestfile");
 	
 	//约束：距离太近的两个部署点不能同时被选中
 	vector<pair<int,int>> ans = getConflictCand(cands,thre); //5000：5米
@@ -571,7 +545,7 @@ void writeFile1(vector<vector<int>>& cover_sets, int m, int n, vector<Point>& ca
 } 
 
 void writeResult(vector<int>& ans, vector<vector<int>>& cover_points,vector<Point>& cands,vector<Point>& points){
-	ofstream location_out("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/resPoints");
+	ofstream location_out("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/resPoints");
 	/*
 	location_out.open("../data/resPoints",std::ios::out | std::ios::app);
 	if(!location_out.is_open())
@@ -591,7 +565,7 @@ void writeResult(vector<int>& ans, vector<vector<int>>& cover_points,vector<Poin
 
 void writeMergedLines(vector<Line>& lines){
 	//ofstream location_out("../data/mergedLines.csv");
-	ofstream location_out("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/mergedLines.csv");
+	ofstream location_out("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/mergedLines.csv");
 	/*
 	location_out.open("../data/mergedLines1.csv",std::ios::out | std::ios::app);
 	if(!location_out.is_open())
@@ -673,7 +647,7 @@ int main(int argc, char *argv[]){
 	int cover_num = atoi(argv[4]);
 	int dist_thre = atoi(argv[5]);
 	//读取线段
-	vector<Line> lines = readLines("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/linesdata.csv");
+	vector<Line> lines = readLines("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/linesdata.csv");
 	vector<int> border = getBorder(lines);
 	for(int num:border) cout<<num<<' ';
 	cout<<endl;
@@ -708,7 +682,7 @@ int main(int argc, char *argv[]){
 	    writeFile1(cover_sets,points.size(),cands.size(),cands,cover_num,dist_thre); //new_code
 	} else if (data_type == 1){
 	    //输出解的信息
-	    vector<int> ans = readResult("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/solution.res");
+	    vector<int> ans = readResult("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/solution.res");
 	    for(int num:ans) cout<<num<<' ';
 	    cout<<endl;
 	    writeResult(ans,cover_points,cands,points);

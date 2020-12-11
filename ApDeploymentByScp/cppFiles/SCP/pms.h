@@ -907,7 +907,7 @@ void Satlike::print_best_solution()
 	}
 	else cout<<"fail to find feasible solution!"<<endl;
 	
-	ofstream ofile("E:/Study/FinalProject/DjangoTest/ApDeploymentByScp/data/solution.res");
+	ofstream ofile("E:/Study/FinalProject/ApDeployment/ApDeploymentByScp/data/solution.res");
 	//ofile << num_vars << " ";
 	int cnt = 0;
 	for (int i = 1; i <= num_vars; i++)

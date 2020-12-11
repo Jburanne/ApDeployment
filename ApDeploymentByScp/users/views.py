@@ -26,7 +26,7 @@ def add(request):
             user.save()
             # 读取cad文件
             cad_file_path = os.getcwd().replace("\\","/")+"/media/img/"+str(headimg)
-            readCad.saveLines1(cad_file_path)
+            readCad.saveLines(cad_file_path)
             # c++处理线条&获取算法的输入文件
             readCad.getInput(spread_dist, reduce_dist, cover_num, dist_thre)
             # 运行scp代码，输出解

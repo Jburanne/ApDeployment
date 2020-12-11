@@ -14,6 +14,8 @@ for index, row in df.iterrows():
 
 for i in range(len(x)):
     plt.plot(x[i], y[i], color='b', linewidth=0.6)
+
+#plt.savefig('./structureGraph')
 file_path = "./resPoints"
 cnames = {
         'aliceblue': '#F0F8FF',
@@ -177,7 +179,7 @@ with open(file_path, 'r') as f:
             plt.scatter(int(pos[0]), int(pos[1]), color='r', s=5)
             content = "("+str(round((int(pos[0])-184934)/1000))+","+str(round((int(pos[1])-2746)/1000))+")"
             #content = pos[0]+","+pos[1]
-            plt.text(int(pos[0]),int(pos[1]),content,color='g')
+            #plt.text(int(pos[0]),int(pos[1]),content,color='g')
             cnt += 1
             flag = 0
         else:
